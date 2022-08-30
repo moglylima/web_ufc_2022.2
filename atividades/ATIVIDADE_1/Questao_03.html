@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <h2>JavaScript Arrays</h2>
+
+    <h4 id="demo"></h4>
+
+    <script>
+        const alunos = [
+            { nome: "Leandro", ira: 7.5 },
+            { nome: "Maria", ira: 8.2 },
+            { nome: "José", ira: 4.5 },
+            { nome: "Diana", ira: 5.4 },
+            { nome: "Bruna", ira: 6.7 }
+        ];
+
+        function reprovados(alunos) {
+
+            let text = "<ul>";
+
+            for (let i = 0; i < alunos.length; i++) {
+                if (alunos[i].ira < 7) {
+                    text += "<li>" + "Nome: " + alunos[i].nome +  ",&nbspIRA: " + alunos[i].ira + "</li>";
+                }
+            }
+            text += "</ul>";
+
+            return text;;
+        }
+        document.getElementById("demo").innerHTML = reprovados(alunos);
+    </script>
+</body>
+
+</html>

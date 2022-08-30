@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    O IMC é
+    <p id="imc"></p>
+    <script>
+        function calculoImc(peso, altura) {
+            return peso / (altura ** 2)
+        }
+        document.getElementById("imc").innerHTML = calculoImc(90, 1.80);
+    </script>
+</body>
+
+</html>
