@@ -2,41 +2,52 @@ import React from "react";
 
 export function IMC({ peso, altura }) {
 
-    function calculoImc(peso, altura) {
-        let imc = peso / (altura ** 2)
-        return imc.toFixed(2);
+    const imc = calculo()
+
+    function calculo() {
+        return (peso / (altura ** 2))
     }
 
-    function statusIMC(imc) {
-
-        if (imc < 17) {
-            return "Muito abaixo de peso"
-        } else if (imc <= 17 && imc <= 18.49) {
-            return "Abaixo do peso"
-        } else if (imc <= 17 && imc <= 18.49) {
-            return "Abaixo do peso"
+    function status() {
+        if (imc < 18.5) {
+            return (
+                <div>
+                    <h3>Abaixo do peso!</h3>
+                </div>
+            )
         }
-
-
+        if (imc >= 18.5 && imc <= 24.9) {
+            return (
+                <div>
+                    <h3>Peso normal!</h3>
+                </div>
+            )
+        }
+        if (imc >= 25 && imc <= 29.9) {
+            return (
+                <div>
+                    <h3>Excesso de Peso!</h3>
+                </div>
+            )
+        } 
+        if (imc >= 30 && imc <= 35) {
+            return (
+                <div>
+                    <h3>Excesso de Peso!</h3>
+                </div>
+            )
+        } return (
+            <div>
+                <h3>Obesidade Extrema!</h3>
+            </div>
+        )
     }
 
-
-    /*
-        < 17 -> Muito abaixo de peso
-        17 - 18.49 abaixo do peso
-        18.50-24 normal
-        25-29 Acima do peso
-        30-34 obesidade 1
-        35-39.99 obesidade 2
-        >40 obesidade 3
-
-
-    */
 
     return (
         <div>
-            <h1>Seu IMC: {calculoImc(peso, altura)}</h1>
-            <h3></h3>
+            <h1>Seu IMC: {imc.toFixed(2)} </h1>
+            <h3>Sua situação é: {status()}</h3>
         </div>
     )
 }

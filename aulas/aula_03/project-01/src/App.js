@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
 // import { Calculadora } from './components/Calculadora';
-import { IMC } from './components/IMC'
+import { IMC } from "./components/IMC";
 
 class App extends Component {
   render() {
@@ -9,9 +9,7 @@ class App extends Component {
       <div className="App">
         {/* <Calculadora op={"SOMA"} x={10} y={29} /> */}
 
-        <IMC peso={97} altura={1.82} />
-
-
+        <IMC peso={82} altura={1.82} />
       </div>
     );
   }
