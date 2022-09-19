@@ -12,8 +12,8 @@ const VotacaoCidade = () => {
       <h2>Limoeiro: {limoeiro}</h2>
 
       <button onClick={setQuixada(quixada + 1)}>Quixadá</button>
-      <button>Crateus</button>
-      <button>Limoeiro</button>
+      <button onClick={setCrateus(crateus + 1)}>Crateus</button>
+      <button onClick={setLimoeiro(limoeiro) + 1}>Limoeiro</button>
     </div>
   );
 };
