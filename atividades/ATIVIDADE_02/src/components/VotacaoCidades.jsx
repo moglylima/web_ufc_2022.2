@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const VotacaoCidades = () => {
 
@@ -8,28 +8,50 @@ const VotacaoCidades = () => {
     const [quixada, setQuixada] = useState(0)
     const [banabuiu, setBanabuiu] = useState(0)
     const [quixeramobim, setQuixeramobim] = useState(0)
-    const [melhorVotado, setMelhorVotado] = useState("")
 
-    function resultado() {
-        if (quixada === quixeramobim || quixada === banabuiu || banabuiu === quixeramobim) {
-            setMelhorVotado("Empate...")
-        }
+    const [maior, setMaior] = useState(0)
+    const [menor, setMenor] = useState(0)
 
-        if (quixada > banabuiu && quixada > quixeramobim) {
-            return setMelhorVotado("Quixada")
+    const cidadesNames = ["Quixada", "Quixeramobim", "Banabuiu"]
+
+    useEffect(() => {
+        const cidades = [quixada, quixeramobim, banabuiu]
+
+        let maiorLocal = maior
+        for (let i = 0; i < cidades.length; i++) {
+            if (cidades[i] > maiorLocal) maiorLocal = cidades[i]
         }
-        if (banabuiu > quixeramobim) {
-            return setMelhorVotado("Banabuiu")
+        setMaior(maiorLocal)
+
+        let menorLocal = maiorLocal
+        for (let i = 0; i < cidades.length; i++) {
+            if (cidades[i] < menorLocal) menorLocal = cidades[i]
         }
-        if (quixeramobim > quixada) {
-            return setMelhorVotado("quixeramobim")
+        setMenor(menorLocal)
+
+    }, [quixada, quixeramobim, banabuiu])
+
+    function mostrarMaiores() {
+        let maiores = ''
+        const cidades = [quixada, quixeramobim, banabuiu]
+        for (let i = 0; i < cidades.length; i++) {
+            if (cidades[i] === maior) maiores += cidadesNames[i] + ' '
         }
+        return maiores
     }
+
+    function mostrarMenores() {
+        let menores = ''
+        const cidades = [quixada, quixeramobim, banabuiu]
+        for (let i = 0; i < cidades.length; i++) {
+            if (cidades[i] === menor) menores += cidadesNames[i] + ' '
+        }
+        return menores
+    }
+
 
     return (
         <div>
-
-
             <table class="table">
                 <thead>
                     <tr><th colSpan={4}>Votação Cidades</th></tr>
@@ -75,20 +97,13 @@ const VotacaoCidades = () => {
             </table>
 
             <div>
-
-                <button
-                    onClick={resultado}
-                    type="button" class="btn btn-dark">
-                    Resultado final
-                </button>
-                <br /> Resultado: {melhorVotado}
-
-
+                {mostrarMaiores}
+                {mostrarMenores}
             </div>
 
 
-        </div >
-    )
+
+        </div>)
 }
 
 export default VotacaoCidades
