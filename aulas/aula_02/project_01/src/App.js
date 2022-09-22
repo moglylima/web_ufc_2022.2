@@ -10,7 +10,6 @@ class App extends Component {
       <div className="App">
         <HelloWorld />
         <HelloWorldHeron />
-
         <Estudante
           nome="Mogleson"
           curso="R.C"

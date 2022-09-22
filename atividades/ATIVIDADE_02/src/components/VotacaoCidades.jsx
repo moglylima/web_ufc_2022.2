@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 
 const VotacaoCidades = () => {
 
@@ -9,50 +9,58 @@ const VotacaoCidades = () => {
     const [banabuiu, setBanabuiu] = useState(0)
     const [quixeramobim, setQuixeramobim] = useState(0)
 
-    const [maior, setMaior] = useState(0)
-    const [menor, setMenor] = useState(0)
+    const cidadesStr = ["Quixada", "Banabuiu", "Quixeramobim"]
+    const cidades = [quixada, banabuiu, quixeramobim]
 
-    const cidadesNames = ["Quixada", "Quixeramobim", "Banabuiu"]
+    function computarVotacao() {
+        let maior = 0
+        let nameCidades = []
 
-    useEffect(() => {
-        const cidades = [quixada, quixeramobim, banabuiu]
-
-        let maiorLocal = maior
-        for (let i = 0; i < cidades.length; i++) {
-            if (cidades[i] > maiorLocal) maiorLocal = cidades[i]
+        for(let i = 0; i < cidades.length; i++){
+            if(cidades[i] > maior){
+                maior = cidades[i]
+                nameCidades = []
+            }
+            if(cidades[i] === maior){
+                nameCidades.push(cidadesStr[i])
+            }
         }
-        setMaior(maiorLocal)
+        //Retornamos um obj. contendo um array com as cidades e o número de votos.
+        return {nameCidades, maior};
+    }
+    
+    function mostreResultado(){
+        //Aqui chamamos a função que computa a votação(guardamos o retorno em uma constante)
+        let cityQtdVotos = computarVotacao()
 
-        let menorLocal = maiorLocal
-        for (let i = 0; i < cidades.length; i++) {
-            if (cidades[i] < menorLocal) menorLocal = cidades[i]
+        //Aqui desestruturamos o objeto que recebemos da função computarVotacao
+        let nameCidades = cityQtdVotos.nameCidades,
+        qtdVotos = cityQtdVotos.maior
+
+        //Aqui verificamos se houve algum voto
+        if(qtdVotos === 0){
+            return alert("Nenhuma cidade foi votada!");
         }
-        setMenor(menorLocal)
-
-    }, [quixada, quixeramobim, banabuiu])
-
-    function mostrarMaiores() {
-        let maiores = ''
-        const cidades = [quixada, quixeramobim, banabuiu]
-        for (let i = 0; i < cidades.length; i++) {
-            if (cidades[i] === maior) maiores += cidadesNames[i] + ' '
+        // Aqui verificamos quem foi a cidade mais votada
+        if(nameCidades.length === 1){
+            return alert("A cidade com mais votos é " + nameCidades + " com " + qtdVotos + " voto(s)");
         }
-        return maiores
+        //Aqui tratamos o empate
+        if(nameCidades.length > 1){
+            return alert("As cidades com mais votos são " + nameCidades + " com " + qtdVotos + " voto(s)");
+        }
+        
     }
 
-    function mostrarMenores() {
-        let menores = ''
-        const cidades = [quixada, quixeramobim, banabuiu]
-        for (let i = 0; i < cidades.length; i++) {
-            if (cidades[i] === menor) menores += cidadesNames[i] + ' '
-        }
-        return menores
+    function reset(){
+        setQuixada(0)
+        setBanabuiu(0)
+        setQuixeramobim(0)
     }
-
 
     return (
-        <div>
-            <table class="table">
+        <div className="container">
+            <table className="table">
                 <thead>
                     <tr><th colSpan={4}>Votação Cidades</th></tr>
                     <tr>
@@ -68,7 +76,7 @@ const VotacaoCidades = () => {
                         <td>Quixada</td>
                         <td>{quixada}</td>
                         <td>
-                            <button type="button" class="btn btn-primary"
+                            <button type="button" className="btn btn-primary"
                                 onClick={() => setQuixada(quixada + 1)}
                             >Votar</button>
                         </td>
@@ -78,7 +86,7 @@ const VotacaoCidades = () => {
                         <td>Quixeramobim</td>
                         <td>{quixeramobim}</td>
                         <td>
-                            <button type="button" class="btn btn-primary"
+                            <button type="button" className="btn btn-primary"
                                 onClick={() => setQuixeramobim(quixeramobim + 1)}
                             > Votar</button>
                         </td>
@@ -88,17 +96,22 @@ const VotacaoCidades = () => {
                         <td>Banabuiu</td>
                         <td>{banabuiu}</td>
                         <td>
-                            <button type="button" class="btn btn-primary"
-                                onClick={() => setBanabuiu(banabuiu + 1)}
+                            <button type="button" className="btn btn-primary"
+                                onClick={() => setBanabuiu(banabuiu + 1) }
                             >Votar</button>
                         </td>
                     </tr>
                 </tbody>
             </table>
 
-            <div>
-                {mostrarMaiores}
-                {mostrarMenores}
+            <div >
+                <button type="button" className="btn btn-sm btn-dark" onClick={mostreResultado}>
+                    Resultado
+                </button>
+
+                <button type="button" className="btn btn-sm btn-warning" onClick={reset}>
+                    Resetar Votação
+                </button>
             </div>
 
 
