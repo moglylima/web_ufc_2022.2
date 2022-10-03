@@ -7,12 +7,18 @@ const CreateStudent = () => {
   const [course, setCourse] = useState('')
   const [ira, setIra] = useState(0.0)
 
+  // id: 3, name: "Vilnei", course: "DD", ira: 4.5 }
   const handleSubmit = (event) => {
     //event.preventDefault()
+    // const estudante = {
+    //   id: (),
+    //   name: name,
+    //   course: course,
+    //   ira: ira
+    // }
     console.log(name)
     console.log(course)
     console.log(ira)
-
   }
   return (
     <div style={{ marginTop: 20 }}>
@@ -47,13 +53,15 @@ const CreateStudent = () => {
         <div className='form-group'>
           <label>IRA: </label>
           <input
-            type='number'
+            type='numeric'
+            min="0"
+            max="10"
             step='any'
             className='form-control'
             placeholder='Digite seu IRA'
             onChange={
               (event) => {
-                setIra(event.target.value)
+                setIra(Number(event.target.value))
               }
             }
           />
