@@ -8,13 +8,7 @@ const CreateStudent = () => {
 
   // id: 3, name: "Vilnei", course: "DD", ira: 4.5 }
   const handleSubmit = (event) => {
-    //event.preventDefault()
-    // const estudante = {
-    //   id: (),
-    //   name: name,
-    //   course: course,
-    //   ira: ira
-    // }
+    event.preventDefault();
     console.log(name);
     console.log(course);
     console.log(ira);
