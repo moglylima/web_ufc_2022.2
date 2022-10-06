@@ -30,7 +30,7 @@ const CreateProfessor = () => {
           <input
             type="text"
             className="form-control"
-            placeholder="Digite seu curso"
+            placeholder="Digite Universidade"
             onChange={(event) => {
               setUniversity(event.target.value);
             }}
@@ -39,12 +39,9 @@ const CreateProfessor = () => {
         <div className="form-group">
           <label>Degree: </label>
           <input
-            type="numeric"
-            min="0"
-            max="10"
-            step="any"
+            type="text"
             className="form-control"
-            placeholder="Digite seu IRA"
+            placeholder="Digite Degree"
             onChange={(event) => {
               setDegree(event.target.value);
             }}

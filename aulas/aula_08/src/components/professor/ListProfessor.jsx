@@ -19,6 +19,10 @@ const ListProfessor = () => {
       });
   });
 
+  function deleteProfessor() {
+    axios.delete(baseUrl, { data: { id: 1 } });
+  }
+
   const generateTableBody = () => {
     return professors.map((element, index) => {
       return (
@@ -27,6 +31,23 @@ const ListProfessor = () => {
           <td>{element.name}</td>
           <td>{element.university}</td>
           <td>{element.degree}</td>
+          <td>
+            <button
+              style={{ margin: 5 }}
+              type="button"
+              className="btn btn-secondary"
+            >
+              Edit
+            </button>
+            <buttont
+              onClick={() => deleteProfessor(element.id)}
+              style={{ margin: 5 }}
+              type="button"
+              className="btn btn-warning"
+            >
+              Delete
+            </buttont>
+          </td>
         </tr>
       );
     });
@@ -41,6 +62,7 @@ const ListProfessor = () => {
             <th>Name</th>
             <th>University</th>
             <th>Degree</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>{generateTableBody()}</tbody>
