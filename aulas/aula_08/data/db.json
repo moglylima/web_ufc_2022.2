@@ -1,0 +1,30 @@
+{
+    "students": [
+      {
+        "name": "Beltrano ",
+        "course": "RC",
+        "ira": "7",
+        "id": 1
+      }
+    ],
+    "professors": [
+      {
+        "name": "Jeandro Mesquita",
+        "university": "UFC",
+        "degree": "Doutorado",
+        "id": 4
+      },
+      {
+        "name": "Rafael Braga ",
+        "university": "UFC",
+        "degree": "Doutorado",
+        "id": 5
+      },
+      {
+        "name": "Fulano de Tall",
+        "university": "UFC",
+        "degree": "Doutor",
+        "id": 6
+      }
+    ]
+  }

@@ -1,9 +1,24 @@
 import React from "react";
+import { useEffect } from "react";
 import { useState } from "react";
-import { studentsList } from "./data.js";
+import axios from "axios";
 
 const ListStudent = () => {
-  const [students, setStudents] = useState(studentsList);
+  const baseUrl = "http://localhost:3001/students";
+  const [students, setStudents] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(baseUrl)
+      .then((response) => {
+        {
+          setStudents(response.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
 
   const generateTableBody = () => {
     return students.map((element, index) => {

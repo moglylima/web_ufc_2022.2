@@ -1,8 +1,23 @@
+import axios from "axios";
 import React, { useState } from "react";
-import { professorList } from "./data";
+import { useEffect } from "react";
 
 const ListProfessor = () => {
-  const [professors, setPorfessor] = useState(professorList);
+  const baseUrl = "http://localhost:3001/professors";
+  const [professors, setPorfessor] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(baseUrl)
+      .then((response) => {
+        {
+          setPorfessor(response.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
 
   const generateTableBody = () => {
     return professors.map((element, index) => {

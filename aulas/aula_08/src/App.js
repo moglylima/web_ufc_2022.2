@@ -16,7 +16,6 @@ function App() {
   return (
     <div className="container">
       {/* NavBar */}
-
       <nav className="navbar navbar-expand-lg bg-primary">
         <div className="container-fluid">
           <Link to={"/"} className="navbar-brand">
