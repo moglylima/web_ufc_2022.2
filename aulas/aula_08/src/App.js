@@ -115,7 +115,7 @@ function App() {
         <Route path="/" element={<Home />} exact />
         <Route path="/about" element={<About />} />
         <Route path="/createstudent" element={<CreateStudent />} />
-        <Route path="/editstudent" element={<EditStudent />} />
+        <Route path="/editstudent/:idUrl" element={<EditStudent />} />
         <Route path="/liststudent" element={<ListStudent />} />
 
         {/* Professor */}
