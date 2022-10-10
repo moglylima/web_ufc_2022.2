@@ -18,7 +18,7 @@ const ListStudent = () => {
       .catch((err) => {
         console.log(err);
       });
-  });
+  }, []);
 
   const generateTableBody = () => {
     return students.map((element, index) => {

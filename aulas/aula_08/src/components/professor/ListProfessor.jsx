@@ -3,7 +3,9 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 
 const ListProfessor = () => {
-  const baseUrl = "http://localhost:3001/professors";
+  const baseUrl = process.env.REACT_APP_BASE_URL_SERVER_PROF || "url desgrama";
+
+  console.log(baseUrl);
   const [professors, setPorfessor] = useState([]);
 
   useEffect(() => {
@@ -17,7 +19,7 @@ const ListProfessor = () => {
       .catch((err) => {
         console.log(err);
       });
-  });
+  }, []);
 
   function deleteProfessor() {
     axios.delete(baseUrl, { data: { id: 1 } });
@@ -39,6 +41,9 @@ const ListProfessor = () => {
             >
               Edit
             </button>
+          </td>
+
+          <td>
             <buttont
               onClick={() => deleteProfessor(element.id)}
               style={{ margin: 5 }}
@@ -62,7 +67,9 @@ const ListProfessor = () => {
             <th>Name</th>
             <th>University</th>
             <th>Degree</th>
-            <th>Actions</th>
+            <th colSpan={2} style={{ textAlign: "center" }}>
+              Actions
+            </th>
           </tr>
         </thead>
         <tbody>{generateTableBody()}</tbody>
