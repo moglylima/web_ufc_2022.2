@@ -1,17 +1,25 @@
+import axios from "axios";
 import React from "react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const CreateStudent = () => {
   const [name, setName] = useState("");
   const [course, setCourse] = useState("");
   const [ira, setIra] = useState(0.0);
 
-  // id: 3, name: "Vilnei", course: "DD", ira: 4.5 }
+  const baseUrl = process.env.REACT_APP_URL_STUD;
   const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(name);
-    console.log(course);
-    console.log(ira);
+    const student = { name, course, ira };
+
+    axios
+      .post(baseUrl, student)
+      .then((response) => {
+        alert("Student created successfully!");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <div style={{ marginTop: 20 }}>
@@ -56,11 +64,14 @@ const CreateStudent = () => {
         <div className="form-group" style={{ marginTop: 15 }}>
           <input
             type="submit"
-            value="Criar Estudante"
+            value="Create Student"
             className="btn btn-primary"
           />
         </div>
       </form>
+      <nav>
+        <Link to="/">Home</Link>
+      </nav>
     </div>
   );
 };

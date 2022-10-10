@@ -1,11 +1,10 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const ListProfessor = () => {
-  const baseUrl = process.env.REACT_APP_BASE_URL_SERVER_PROF || "url desgrama";
-
-  console.log(baseUrl);
+  const baseUrl = process.env.REACT_APP_URL_PROF;
   const [professors, setPorfessor] = useState([]);
 
   useEffect(() => {
@@ -21,12 +20,20 @@ const ListProfessor = () => {
       });
   }, []);
 
-  function deleteProfessor() {
-    axios.delete(baseUrl, { data: { id: 1 } });
+  function deleteProfessorById(id) {
+    axios
+      .delete(baseUrl + id)
+      .then((response) => {
+        alert("Professor deleted successfully!");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   const generateTableBody = () => {
     return professors.map((element, index) => {
+      const idUrl = element.id;
       return (
         <tr key={index}>
           <td>{element.id}</td>
@@ -34,18 +41,17 @@ const ListProfessor = () => {
           <td>{element.university}</td>
           <td>{element.degree}</td>
           <td>
-            <button
+            <Link
               style={{ margin: 5 }}
-              type="button"
               className="btn btn-secondary"
+              to={"/editprofessor/" + idUrl}
             >
               Edit
-            </button>
+            </Link>
           </td>
-
           <td>
             <buttont
-              onClick={() => deleteProfessor(element.id)}
+              onClick={() => deleteProfessorById(element.id)}
               style={{ margin: 5 }}
               type="button"
               className="btn btn-warning"

@@ -120,7 +120,7 @@ function App() {
 
         {/* Professor */}
         <Route path="/createprofessor" element={<CreateProfessor />} />
-        <Route path="/editprofessor" element={<EditProfessor />} />
+        <Route path="/editprofessor/:idUrl" element={<EditProfessor />} />
         <Route path="/listprofessor" element={<ListProfessor />} />
       </Routes>
     </div>

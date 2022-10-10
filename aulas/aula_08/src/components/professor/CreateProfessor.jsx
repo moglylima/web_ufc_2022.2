@@ -1,14 +1,27 @@
+import axios from "axios";
 import React, { useState } from "react";
 
 const CreateProfessor = () => {
+  const baseUrl = process.env.REACT_APP_URL_PROF;
+
   const [name, setName] = useState("");
   const [university, setUniversity] = useState("");
   const [degree, setDegree] = useState("");
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(name);
-    console.log(university);
-    console.log(degree);
+
+    //criando obj professor
+    const professor = { name, university, degree };
+
+    //cadastro professor
+    axios
+      .post(baseUrl, professor)
+      .then((response) => {
+        alert("Professor cadastrado com sucesso!");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <div style={{ marginTop: 20 }}>
@@ -50,7 +63,7 @@ const CreateProfessor = () => {
         <div className="form-group" style={{ marginTop: 15 }}>
           <input
             type="submit"
-            value="Criar Estudante"
+            value="Create Professor"
             className="btn btn-primary"
           />
         </div>
