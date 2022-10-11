@@ -1,6 +1,6 @@
 import React from "react";
 
-const Hero = ({ name, image }) => {
+const Hero2 = ({ name, image }) => {
   return (
     <div>
       <h2>Prof. {name}</h2>
@@ -11,4 +11,4 @@ const Hero = ({ name, image }) => {
   );
 };
 
-export { Hero };
+export { Hero2 };

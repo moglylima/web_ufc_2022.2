@@ -1,6 +1,6 @@
 import React from "react";
 
-const Enemy = ({ name, image }) => {
+const Enemy2 = ({ name, image }) => {
   return (
     <div>
       <h2>Prof. {name}</h2>
@@ -9,4 +9,4 @@ const Enemy = ({ name, image }) => {
   );
 };
 
-export { Enemy };
+export { Enemy2 };
