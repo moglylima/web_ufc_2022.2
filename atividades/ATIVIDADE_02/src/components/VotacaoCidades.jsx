@@ -65,10 +65,10 @@ export const VotacaoCidades = () => {
     if (cidades.length > 1) {
       return alert(
         "As cidades com mais votos são " +
-          cidades +
-          " com " +
-          maior +
-          " voto(s)"
+        cidades +
+        " com " +
+        maior +
+        " voto(s)"
       );
     }
   }
@@ -94,7 +94,7 @@ export const VotacaoCidades = () => {
     <div>
       <h2>Votação de Cidades</h2>
 
-      <form onSubmit={adicionarCidade}>
+      <div >
         <label>Cidade</label>
         <input
           type="text"
@@ -102,8 +102,8 @@ export const VotacaoCidades = () => {
             setCidade(event.target.value);
           }}
         />
-        <button type="submit">Cadastrar Cidade</button>
-      </form>
+        <button onClick={adicionarCidade}>Cadastrar Cidade</button>
+      </div>
 
       <table>
         <thead>
