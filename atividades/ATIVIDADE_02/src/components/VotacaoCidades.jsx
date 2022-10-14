@@ -1,163 +1,123 @@
 import React, { useState } from "react";
 
-const VotacaoCidades = () => {
-  // Votação de Cidades
-  // Cidade melhor votada
+export const VotacaoCidades = () => {
+  const [cidades, setCidades] = useState([]);
+  const [cidade, setCidade] = useState("");
 
-  const [quixada, setQuixada] = useState(0);
-  const [banabuiu, setBanabuiu] = useState(0);
-  const [quixeramobim, setQuixeramobim] = useState(0);
-
-  const cidadesStr = ["Quixada", "Banabuiu", "Quixeramobim"];
-  const cidades = [quixada, banabuiu, quixeramobim];
-
+  function linhasTabela() {
+    return cidades.map((cidade) => (
+      <tr>
+        <td>{cidade.nome}</td>
+        <td>{cidade.votos}</td>
+        <td>
+          <button onClick={() => votar(cidade.nome)}>Votar</button>
+        </td>
+      </tr>
+    ));
+  }
   function computarVotacao() {
     let maior = 0;
     let nameCidades = [];
 
     for (let i = 0; i < cidades.length; i++) {
-      if (cidades[i] > maior) {
-        maior = cidades[i];
+      if (cidades[i].votos > maior) {
+        maior = cidades[i].votos;
         nameCidades = [];
       }
-      if (cidades[i] === maior) {
-        nameCidades.push(cidadesStr[i]);
+      if (cidades[i].votos === maior) {
+        nameCidades.push(cidades[i].nome);
       }
     }
+    const resultado = { cidades: nameCidades, maior: maior };
     //Retornamos um obj. contendo um array com as cidades e o número de votos.
-    return { nameCidades, maior };
+    return resultado;
+  }
+
+  function votar(cidade) {
+    const novaLista = cidades.map((c) => {
+      if (c.nome === cidade) {
+        return { ...c, votos: c.votos + 1 };
+      }
+      return c;
+    });
+    setCidades(novaLista);
   }
 
   function mostreResultado() {
     //Aqui chamamos a função que computa a votação(guardamos o retorno em uma constante)
-    let cityQtdVotos = computarVotacao();
+    let resultado = computarVotacao();
 
     //Aqui desestruturamos o objeto que recebemos da função computarVotacao
-    let nameCidades = cityQtdVotos.nameCidades,
-      qtdVotos = cityQtdVotos.maior;
+    let cidades = resultado.cidades,
+      maior = resultado.maior;
 
     //Aqui verificamos se houve algum voto
-    if (qtdVotos === 0) {
+    if (maior === 0) {
       return alert("Nenhuma cidade foi votada!");
     }
     // Aqui verificamos quem foi a cidade mais votada
-    if (nameCidades.length === 1) {
+    if (cidades.length === 1) {
       return alert(
-        "A cidade com mais votos é " +
-          nameCidades +
-          " com " +
-          qtdVotos +
-          " voto(s)"
+        "A cidade com mais votos é " + cidades[0] + " com " + maior + " voto(s)"
       );
     }
     //Aqui tratamos o empate
-    if (nameCidades.length > 1) {
+    if (cidades.length > 1) {
       return alert(
         "As cidades com mais votos são " +
-          nameCidades +
+          cidades +
           " com " +
-          qtdVotos +
+          maior +
           " voto(s)"
       );
     }
   }
 
-  function reset() {
-    setQuixada(0);
-    setBanabuiu(0);
-    setQuixeramobim(0);
+  function reiniciar() {
+    const novaLista = cidades.map((c) => {
+      return { ...c, votos: 0 };
+    });
+    setCidades(novaLista);
   }
 
-  //   Aprimorando
+  function reset() {
+    setCidades([]);
+  }
 
+  function adicionarCidade() {
+    if (cidade === "") {
+      return alert("Digite o nome da cidade!");
+    }
+    setCidades([...cidades, { nome: cidade, votos: 0 }]);
+  }
   return (
-    <div className="container">
-      <table className="table">
+    <div>
+      <h2>Votação de Cidades</h2>
+
+      <form onSubmit={adicionarCidade}>
+        <label>Cidade</label>
+        <input
+          type="text"
+          onChange={(event) => {
+            setCidade(event.target.value);
+          }}
+        />
+        <button type="submit">Cadastrar Cidade</button>
+      </form>
+
+      <table>
         <thead>
           <tr>
-            <th colSpan={4}>Votação Cidades</th>
-          </tr>
-          <tr>
-            <th scope="col"></th>
-            <th scope="col">Cidades</th>
-            <th scope="col">Qtd. Votos</th>
-            <th scope="col">Votar</th>
+            <th>Cidade</th>
+            <th>Qtd. Votos</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Quixada</td>
-            <td>{quixada}</td>
-            <td>
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={() => setQuixada(quixada + 1)}
-              >
-                Votar
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Quixeramobim</td>
-            <td>{quixeramobim}</td>
-            <td>
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={() => setQuixeramobim(quixeramobim + 1)}
-              >
-                {" "}
-                Votar
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Banabuiu</td>
-            <td>{banabuiu}</td>
-            <td>
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={() => setBanabuiu(banabuiu + 1)}
-              >
-                Votar
-              </button>
-            </td>
-          </tr>
-        </tbody>
+        <tbody>{linhasTabela()}</tbody>
       </table>
 
-      <div>
-        <button
-          type="button"
-          className="btn btn-sm btn-dark"
-          onClick={mostreResultado}
-        >
-          Resultado
-        </button>
-
-        <button
-          type="button"
-          className="btn btn-sm btn-warning"
-          onClick={reset}
-        >
-          Resetar Votação
-        </button>
-      </div>
-
-      <form onSubmit={null}>
-        <label>
-          Nome:
-          <input type="text" value={null} onChange={null} />
-        </label>
-        <input type="submit" value="Enviar" />
-      </form>
+      <button onClick={mostreResultado}>Resultado</button>
+      <button onClick={reiniciar}>Reiniciar</button>
+      <button onClick={reset}>Resetar</button>
     </div>
   );
 };
-
-export default VotacaoCidades;
