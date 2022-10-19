@@ -1,0 +1,11 @@
+{
+  "students": [
+    {
+      "name": "Mogleson Lima ",
+      "course": "RC",
+      "ira": 6.9,
+      "id": 2
+    }
+  ],
+  "professors": []
+}
