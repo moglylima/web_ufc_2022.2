@@ -72,7 +72,7 @@ const EditProfessor = () => {
           <label>Degree: </label>
           <input
             value={degree ?? ""}
-            type="numeric"
+            type="text"
             className="form-control"
             placeholder="Digite seu IRA"
             onChange={(event) => {

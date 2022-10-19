@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const ListStudent = () => {
   const baseUrl = process.env.REACT_APP_URL_STUD;
@@ -24,6 +25,9 @@ const ListStudent = () => {
     axios
       .delete(baseUrl + id)
       .then((response) => {
+        window.confirm("Deseja excluir o estudante? ");
+        var studAux = students.filter((student) => student.id !== id);
+        setStudents(studAux);
         alert("Student deleted successfully!");
       })
       .catch((err) => {
@@ -33,6 +37,7 @@ const ListStudent = () => {
 
   const generateTableBody = () => {
     return students.map((element, index) => {
+      const idUrl = element.id;
       return (
         <tr key={index}>
           <td>{element.id}</td>
@@ -40,24 +45,25 @@ const ListStudent = () => {
           <td>{element.course}</td>
           <td>{element.ira}</td>
           <td>
-            <button
+            <Link
+              to={"/editstudent/" + idUrl}
               style={{ margin: 5 }}
               type="button"
               className="btn btn-secondary"
             >
               Edit
-            </button>
+            </Link>
           </td>
 
           <td>
-            <buttont
+            <button
               onClick={() => deleteStudentById(element.id)}
               style={{ margin: 5 }}
               type="button"
               className="btn btn-warning"
             >
               Delete
-            </buttont>
+            </button>
           </td>
         </tr>
       );

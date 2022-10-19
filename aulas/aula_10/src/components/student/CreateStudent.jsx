@@ -1,37 +1,41 @@
 import axios from "axios";
-import React from "react";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const CreateStudent = () => {
+const CreateProfessor = () => {
+  const baseUrl = process.env.REACT_APP_URL_STUD;
   const [name, setName] = useState("");
   const [course, setCourse] = useState("");
   const [ira, setIra] = useState(0.0);
 
-  const baseUrl = process.env.REACT_APP_URL_STUD;
+  const navigate = useNavigate();
+
   const handleSubmit = (event) => {
-    const student = { name, course, ira };
+    event.preventDefault();
+
+    const studentNew = { name, course, ira };
 
     axios
-      .post(baseUrl, student)
+      .post(baseUrl, studentNew)
       .then((response) => {
-        alert("Student created successfully!");
-        navigator("/liststudent");
+        alert("Estudante cadastrado com sucesso!");
+        navigate("/liststudent");
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
   return (
     <div style={{ marginTop: 20 }}>
       <h1>Create Student...</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label>Nome: </label>
+          <label>Name: </label>
           <input
             type="text"
             className="form-control"
-            placeholder="Digite seu nome"
+            placeholder="Digite nome"
             onChange={(event) => {
               setName(event.target.value);
             }}
@@ -42,7 +46,7 @@ const CreateStudent = () => {
           <input
             type="text"
             className="form-control"
-            placeholder="Digite seu curso"
+            placeholder="Digite Curso"
             onChange={(event) => {
               setCourse(event.target.value);
             }}
@@ -52,13 +56,12 @@ const CreateStudent = () => {
           <label>IRA: </label>
           <input
             type="numeric"
-            min="0"
-            max="10"
-            step="any"
+            min={0}
+            max={10}
             className="form-control"
-            placeholder="Digite seu IRA"
+            placeholder="Digite IRA"
             onChange={(event) => {
-              setIra(Number(event.target.value));
+              setIra(event.target.value);
             }}
           />
         </div>
@@ -70,11 +73,8 @@ const CreateStudent = () => {
           />
         </div>
       </form>
-      <nav>
-        <Link to="/">Home</Link>
-      </nav>
     </div>
   );
 };
 
-export default CreateStudent;
+export default CreateProfessor;
