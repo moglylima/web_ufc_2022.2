@@ -4,9 +4,9 @@ const Questao01A = ({ nome, sobrenome, curso }) => {
   return (
     <div>
       <h4>Aluno</h4>
-      <p>Nome: {nome}</p>
-      <p>Sobrenome: {sobrenome}</p>
-      <p>Curso: {curso}</p>
+      <p>Nome: Mogleson </p>
+      <p>Sobrenome: Lima</p>
+      <p>Curso: Redes de Computadores</p>
     </div>
   );
 };

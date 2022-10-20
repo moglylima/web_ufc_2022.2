@@ -1,13 +1,7 @@
 import React from "react";
 
 const Questao01 = (props) => {
-    
-    return(
-        <div>
-            {props.children}
+  return <div>{props.children}</div>;
+};
 
-        </div>
-    )
-}
-
-export {Questao01}
+export { Questao01 };

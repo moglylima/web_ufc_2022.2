@@ -4,8 +4,8 @@ import React, { useEffect, useState } from "react";
 const Questao05 = () => {
   const [paises, setPaises] = useState([]);
   const [regiao, setRegiao] = useState("africa");
-  const [maisPop, setMaisPop] = useState("");
-  const [menosPop, setMenosPop] = useState("");
+  const [menor, setMenor] = useState("");
+  const [maior, setMaior] = useState("");
 
   useEffect(() => {
     axios
@@ -18,9 +18,11 @@ const Questao05 = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [regiao]);
+  // Aqui colocamos a lista de parametros que o useEffect vai observar,
+  // se algum deles mudar, o useEffect vai ser executado novamente.
 
-  const maiorPopulacao = () => {
+  function maiorPopulacao() {
     let maior = 0;
     let pais = "";
     paises.forEach((element) => {
@@ -30,9 +32,9 @@ const Questao05 = () => {
       }
     });
     return pais;
-  };
+  }
 
-  const menorPopulacao = () => {
+  function menorPopulacao() {
     let menor = paises[0].population;
     let pais = "";
     paises.forEach((element) => {
@@ -41,20 +43,18 @@ const Questao05 = () => {
         pais = element.name;
       }
     });
-
     return pais;
-  };
-
-  function result() {
-    if (regiao === "americas") {
-      return <p>O país com maior População é {maiorPopulacao()}.</p>;
-    }
-    if (regiao === "asia") {
-      return <p>O país com menor População é {menorPopulacao()}.</p>;
-    } else {
-      return <p>Selecione uma região</p>;
-    }
   }
+
+  // Aqui usamos o useEffect para executar a função maiorPopulacao() e menorPopulacao()
+  useEffect(() => {
+    if (regiao === "asia") {
+      setMenor(menorPopulacao());
+    }
+    if (regiao === "americas") {
+      setMaior(maiorPopulacao());
+    }
+  }, [paises]);
 
   return (
     <div>
@@ -76,7 +76,19 @@ const Questao05 = () => {
         Asia
       </button>
 
-      {result()}
+      <button
+        className="btn btn-primary"
+        onClick={(event) => {
+          setRegiao("africa");
+          setMaior("");
+          setMenor("");
+        }}
+      >
+        Reset
+      </button>
+
+      <p>O país com maior População das Americas: {maior}</p>
+      <p>O país com menor População da Asia: {menor}</p>
     </div>
   );
 };

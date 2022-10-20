@@ -5,14 +5,14 @@ import { Link } from "react-router-dom";
 
 const ListProfessor = () => {
   const baseUrl = process.env.REACT_APP_URL_PROF;
-  const [professors, setProfessor] = useState([]);
+  const [professors, setProfessors] = useState([]);
 
   useEffect(() => {
     axios
       .get(baseUrl)
       .then((response) => {
         {
-          setProfessor(response.data);
+          setProfessors(response.data);
         }
       })
       .catch((err) => {
@@ -25,7 +25,7 @@ const ListProfessor = () => {
       .delete(baseUrl + id)
       .then((response) => {
         var profAux = professors.filter((prof) => prof.id !== id);
-        setProfessor(profAux);
+        setProfessors(profAux);
         alert("Professor deleted successfully!");
       })
       .catch((err) => {

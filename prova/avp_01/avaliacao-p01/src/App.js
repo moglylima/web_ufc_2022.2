@@ -21,11 +21,7 @@ const App = () => {
         <u> Questão 01</u>
       </h1>
       <Questao01>
-        <Questao01A
-          nome="Mogleson"
-          sobrenome="Lima"
-          curso="Redes de Computadores"
-        />
+        <Questao01A />
         <Questao01B />
       </Questao01>
 

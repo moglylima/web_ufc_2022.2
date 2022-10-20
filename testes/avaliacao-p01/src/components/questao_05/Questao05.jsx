@@ -48,11 +48,11 @@ const Questao05 = () => {
 
   // Aqui usamos o useEffect para executar a função maiorPopulacao() e menorPopulacao()
   useEffect(() => {
-    if (regiao === "americas") {
-      setMaior(maiorPopulacao());
-    }
     if (regiao === "asia") {
       setMenor(menorPopulacao());
+    }
+    if (regiao === "americas") {
+      setMaior(maiorPopulacao());
     }
   }, [paises]);
 
@@ -61,7 +61,7 @@ const Questao05 = () => {
       <button
         className="btn btn-primary"
         onClick={(event) => {
-          setRegiao("americas"), console.log(regiao);
+          setRegiao("americas");
         }}
       >
         Americas
@@ -74,6 +74,17 @@ const Questao05 = () => {
         }}
       >
         Asia
+      </button>
+
+      <button
+        className="btn btn-primary"
+        onClick={(event) => {
+          setRegiao("africa");
+          setMaior("");
+          setMenor("");
+        }}
+      >
+        Reset
       </button>
 
       <p>O país com maior População das Americas: {maior}</p>

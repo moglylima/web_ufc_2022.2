@@ -1,7 +1,11 @@
 import React from "react";
 
 const Questao01B = () => {
-  let disciplinas = ["WEB", "Gerência de Projeto", "Análise de Desempenho"];
+  let disciplinas = [
+    "Desenvolvimento de Software para WEB",
+    "Gerência de Projeto",
+    "Análise de Desempenho",
+  ];
 
   const listItens = () => {
     return disciplinas.map((item, index) => {
