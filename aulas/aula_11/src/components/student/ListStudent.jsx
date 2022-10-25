@@ -3,37 +3,22 @@ import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
-import FirebaseContext from "../../utils/FirebaseContext";
 
 const ListStudent = () => {
   const baseUrl = process.env.REACT_APP_URL_STUD;
   const [students, setStudents] = useState([]);
 
-  const { db } = useContext(FirebaseContext);
-
-  // useEffect(() => {
-  //   axios
-  //     .get(baseUrl)
-  //     .then((response) => {
-  //       {
-  //         setStudents(response.data);
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, []);
-
-  const getStudents = async () => {
-    const dbColeccion = db.collection("students");
-    const { docs } = await dbColeccion.get();
-    const newArray = docs.map((item) => ({ id: item.id, ...item.data() }));
-    setStudents(newArray);
-  };
-
   useEffect(() => {
-    getStudents();
+    axios
+      .get(baseUrl)
+      .then((response) => {
+        {
+          setStudents(response.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   function deleteStudentById(id) {
