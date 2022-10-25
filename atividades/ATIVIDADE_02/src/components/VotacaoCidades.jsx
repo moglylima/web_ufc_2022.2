@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-
 export const VotacaoCidades = () => {
   const [cidades, setCidades] = useState([]);
   const [cidade, setCidade] = useState("");
 
   function linhasTabela() {
     return cidades.map((cidade) => (
-      <tr>
+      <tr className="">
         <td>{cidade.nome}</td>
         <td>{cidade.votos}</td>
         <td>
@@ -65,10 +64,10 @@ export const VotacaoCidades = () => {
     if (cidades.length > 1) {
       return alert(
         "As cidades com mais votos são " +
-        cidades +
-        " com " +
-        maior +
-        " voto(s)"
+          cidades +
+          " com " +
+          maior +
+          " voto(s)"
       );
     }
   }
@@ -94,18 +93,21 @@ export const VotacaoCidades = () => {
     <div>
       <h2>Votação de Cidades</h2>
 
-      <div >
-        <label>Cidade</label>
+      <div>
+        <label className="m-1 flex-10">Cidade</label>
         <input
+          className="form-control-lg"
           type="text"
           onChange={(event) => {
             setCidade(event.target.value);
           }}
         />
-        <button onClick={adicionarCidade}>Cadastrar Cidade</button>
+        <button className="btn btn-dark m-1" onClick={adicionarCidade}>
+          Cadastrar Cidade
+        </button>
       </div>
 
-      <table>
+      <table className="table table-striped-columns table-hover">
         <thead>
           <tr>
             <th>Cidade</th>
@@ -115,9 +117,15 @@ export const VotacaoCidades = () => {
         <tbody>{linhasTabela()}</tbody>
       </table>
 
-      <button onClick={mostreResultado}>Resultado</button>
-      <button onClick={reiniciar}>Reiniciar</button>
-      <button onClick={reset}>Resetar</button>
+      <button className="btn btn-primary m-1" onClick={mostreResultado}>
+        Resultado
+      </button>
+      <button className="btn btn-warning m-1" onClick={reiniciar}>
+        Reiniciar
+      </button>
+      <button className="btn btn-danger m-1" onClick={reset}>
+        Resetar
+      </button>
     </div>
   );
 };
