@@ -1,0 +1,18 @@
+{
+  "students": [
+    {
+      "name": "Mogleson LIma",
+      "course": "RC",
+      "ira": "6.9",
+      "id": 1
+    }
+  ],
+  "professors": [
+    {
+      "name": "João Marcelo",
+      "university": "UFC",
+      "degree": "Doutor",
+      "id": 1
+    }
+  ]
+}
