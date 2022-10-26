@@ -8,7 +8,7 @@ import {Firebase} from "./utils/Firebase";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-    <FirebaseContext.Provider value={new Firebase()}>
+    <FirebaseContext.Provider value={new Firebase() , {Hello}}>
       <BrowserRouter>
       <App />
     </BrowserRouter>

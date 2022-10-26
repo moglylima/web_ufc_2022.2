@@ -4,22 +4,48 @@ import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-const ListStudent = () => {
+import StudentService from "../services/StudentService"
+
+import {FirebaseContext} from "../../utils/FirebaseContext"
+import { useContext } from "react";
+
+const ListStudentPage = ({children})=>{
+
+  return(
+    <FirebaseContext.Consumer >
+        {(value) = <ListStudent firebase={value} />}
+        {/* {children} */}
+    </FirebaseContext.Consumer>
+  )
+}
+
+const ListStudent = (props) => {
   const baseUrl = process.env.REACT_APP_URL_STUD;
   const [students, setStudents] = useState([]);
 
-  useEffect(() => {
-    axios
-      .get(baseUrl)
-      .then((response) => {
-        {
-          setStudents(response.data);
+  // useEffect(() => {
+  //   axios
+  //     .get(baseUrl)
+  //     .then((response) => {
+  //       {
+  //         setStudents(response.data);
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
+
+  useEffect(
+    ()=>{
+      StudentService.getStudents(
+        props.firebase.getFirestoreDb(), (students)=>{
+          setStudents(students)
         }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+      )
+    },[]
+  )
+
 
   function deleteStudentById(id) {
     axios
@@ -91,4 +117,4 @@ const ListStudent = () => {
   );
 };
 
-export default ListStudent;
+export default ListStudentPage;

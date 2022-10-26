@@ -4,6 +4,10 @@ import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
+const ListStudentPage =()=>{
+  
+}
+
 const ListStudent = () => {
   const baseUrl = process.env.REACT_APP_URL_STUD;
   const [students, setStudents] = useState([]);
