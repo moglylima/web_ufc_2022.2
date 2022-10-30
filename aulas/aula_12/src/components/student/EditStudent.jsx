@@ -3,42 +3,51 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { StudentService } from "../../services/StudentService";
-import { FirebaseContext } from "../../utils/FirebaseContext";
 
-const EditStudentPage = () => {
-  return (
-    <FirebaseContext.Consumer>
-      {(value) => <EditStudent firebase={value} />}
-    </FirebaseContext.Consumer>
-  );
-};
-
-const EditStudent = (props) => {
+const EditStudent = () => {
   const navigate = useNavigate();
-  const idUrl = useParams();
+  const baseUrl = process.env.REACT_APP_URL_STUD;
+
   const [name, setName] = useState("");
   const [course, setCourse] = useState("");
   const [ira, setIra] = useState(0.0);
 
+  const paramUrl = useParams();
+
   useEffect(() => {
-    const id = idUrl.id;
-    StudentService.getStudentById(
-      props.firebase.getFirestoreDb(),
-      String(id),
-      (student) => {
-        setName(student.name);
-        setCourse(student.course);
-        setIra(student.ira);
-      }
-    );
-  }, [idUrl]);
+    axios
+      .get(baseUrl + paramUrl.idUrl)
+      .then((response) => {
+        setName(response.data.name);
+        setCourse(response.data.course);
+        setIra(response.data.ira);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [paramUrl.idUrl]);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const studentUpdate = { name, course, ira };
+
+    axios
+      .put(baseUrl + paramUrl.idUrl, studentUpdate)
+      .then((response) => {
+        window.confirm("Set Update?");
+        alert("Student updated successfully!");
+        navigate("/liststudent");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div>
       <h1>Edit Student</h1>
 
-      <form onSubmit={null}>
+      <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Name: </label>
           <input
@@ -89,4 +98,4 @@ const EditStudent = (props) => {
   );
 };
 
-export default EditStudentPage;
+export default EditStudent;

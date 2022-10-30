@@ -1,7 +1,7 @@
 /* eslint-disable no-unreachable */
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import "bootstrap/dist/js/bootstrap.bundle.min";
 import { Link, Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
 import CreateStudent from "./components/student/CreateStudent";

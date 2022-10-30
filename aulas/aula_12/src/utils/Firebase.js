@@ -1,14 +1,12 @@
-import { firebaseConfig } from "../keys/firebaseConfig";
+import { FirebaseConfig } from "../keys/FirebaseConfig";
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
 
 class Firebase {
   constructor() {
-    this.app = initializeApp(firebaseConfig);
+    this.app = initializeApp(FirebaseConfig);
   }
-
   getFirestoreDb() {
-    return getFirestore(this.app);
+    return this.getFirestoreDb(this.app);
   }
 }
 

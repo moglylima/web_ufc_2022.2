@@ -4,9 +4,8 @@ import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { FirebaseContext } from "../../utils/FirebaseContext";
-import { StudentService } from "../../services/StudentService";
 
-export const ListStudentPage = () => {
+const ListStudentPage = () => {
   return (
     <FirebaseContext.Consumer>
       {(value) => <ListStudent firebase={value} />}
@@ -14,26 +13,35 @@ export const ListStudentPage = () => {
   );
 };
 
-const ListStudent = (props) => {
+const ListStudent = () => {
   const baseUrl = process.env.REACT_APP_URL_STUD;
   const [students, setStudents] = useState([]);
 
   useEffect(() => {
-    StudentService.getAllStudentsOnSnapshot(
-      props.firebase.getFirestoreDb(),
-      (students) => {
-        setStudents(students);
-      }
-    );
+    axios
+      .get(baseUrl)
+      .then((response) => {
+        {
+          setStudents(response.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   function deleteStudentById(id) {
-    if (window.confirm("Delete Student?")) {
-      StudentService.deleteStudentById(props.firebase.getFirestoreDb(), id);
-      const studentAux = students.filter((student) => student.id !== id);
-      setStudents(studentAux);
-      alert("Student deleted successfully!");
-    }
+    axios
+      .delete(baseUrl + id)
+      .then((response) => {
+        window.confirm("Deseja excluir o estudante? ");
+        var studAux = students.filter((student) => student.id !== id);
+        setStudents(studAux);
+        alert("Student deleted successfully!");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   const generateTableBody = () => {

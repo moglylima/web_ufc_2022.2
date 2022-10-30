@@ -3,10 +3,15 @@ import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { FirebaseContext } from "../../utils/FirebaseContext";
 
-const ListStudentPage =()=>{
-  
-}
+const ListStudentPage = () => {
+  return (
+    <FirebaseContext.Consumer>
+      {(value) => <ListStudent firebase={value} />}
+    </FirebaseContext.Consumer>
+  );
+};
 
 const ListStudent = () => {
   const baseUrl = process.env.REACT_APP_URL_STUD;
@@ -95,4 +100,4 @@ const ListStudent = () => {
   );
 };
 
-export default ListStudent;
+export default ListStudentPage;
