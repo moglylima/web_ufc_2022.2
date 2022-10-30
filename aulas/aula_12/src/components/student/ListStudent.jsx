@@ -1,8 +1,8 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
+import StudentService from "../../services/StudentService";
 import { FirebaseContext } from "../../utils/FirebaseContext";
 
 const ListStudentPage = () => {
@@ -13,36 +13,20 @@ const ListStudentPage = () => {
   );
 };
 
-const ListStudent = () => {
-  const baseUrl = process.env.REACT_APP_URL_STUD;
+const ListStudent = (props) => {
   const [students, setStudents] = useState([]);
 
+  //Buscando os dados do Firebase
   useEffect(() => {
-    axios
-      .get(baseUrl)
-      .then((response) => {
-        {
-          setStudents(response.data);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    StudentService.getAllStudents(
+      props.firebase.getFirestoreDb(),
+      (students) => {
+        setStudents(students);
+      }
+    );
   }, []);
 
-  function deleteStudentById(id) {
-    axios
-      .delete(baseUrl + id)
-      .then((response) => {
-        window.confirm("Deseja excluir o estudante? ");
-        var studAux = students.filter((student) => student.id !== id);
-        setStudents(studAux);
-        alert("Student deleted successfully!");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
+  function deleteStudentById(id) {}
 
   const generateTableBody = () => {
     return students.map((element, index) => {
