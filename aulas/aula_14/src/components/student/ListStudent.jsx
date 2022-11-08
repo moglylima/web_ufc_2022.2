@@ -17,7 +17,7 @@ const ListStudent = (props) => {
 
   //Buscando os dados do Firebase
   useEffect(() => {
-    StudentService.getAllStudents(
+    StudentService.getAllStudentsOnSnapshot(
       props.firebase.getFirestoreDb(),
       (students) => {
         setStudents(students);
@@ -26,8 +26,14 @@ const ListStudent = (props) => {
   }, []);
 
   function deleteStudentById(id) {
-    StudentService.deleteStudentById(props.firebase.getFirestoreDb(), id);
-    setStudents(students.filter((student) => student.id !== id));
+    StudentService.deleteStudentById(
+      props.firebase.getFirestoreDb(),
+      id,
+      () => {
+        alert(`Student deleted successfully! -> ${id}`);
+        setStudents(students.filter((student) => student.idDoc !== id));
+      }
+    );
   }
 
   const generateTableBody = () => {
@@ -51,7 +57,7 @@ const ListStudent = (props) => {
 
           <td>
             <button
-              onClick={() => deleteStudentById(element.id)}
+              onClick={() => deleteStudentById(element.idDoc)}
               style={{ margin: 5 }}
               type="button"
               className="btn btn-warning"

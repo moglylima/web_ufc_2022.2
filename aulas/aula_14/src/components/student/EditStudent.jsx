@@ -32,6 +32,7 @@ const EditStudent = (props) => {
       (doc) => {
         const { name, course, ira } = doc;
         alert(`Student updated successfully! -> ${name} - ${course} - ${ira}`);
+        navigate("/liststudent");
       }
     );
   };

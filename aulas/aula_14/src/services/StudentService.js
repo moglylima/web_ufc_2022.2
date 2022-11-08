@@ -5,10 +5,24 @@ import {
   doc,
   getDoc,
   getDocs,
+  onSnapshot,
   updateDoc,
 } from "firebase/firestore";
 
 class StudentService {
+  //GET ALL STUDENTS ONSNAPSHOT
+  static getAllStudentsOnSnapshot = (firebaseDb, callback) => {
+    onSnapshot(collection(firebaseDb, "students"), (querySnapshot) => {
+      const studentsList = [];
+      querySnapshot.forEach((doc) => {
+        const idDoc = doc.id;
+        const { name, course, ira } = doc.data();
+        studentsList.push({ idDoc, name, course, ira });
+      });
+      callback(studentsList);
+    });
+  };
+
   //GET ALL STUDENTS
   static getAllStudents = (firebaseDb, callback) => {
     getDocs(collection(firebaseDb, "students")).then((querySnapshot) => {
@@ -55,6 +69,18 @@ class StudentService {
       })
       .catch((error) => {
         console.error("Error updating document: ", error);
+      });
+  };
+
+  //DELETE STUDENT BY ID
+  static deleteStudentById = (firebaseDb, id, callback) => {
+    const docRef = doc(firebaseDb, "students", id);
+    deleteDoc(docRef)
+      .then(() => {
+        callback();
+      })
+      .catch((error) => {
+        console.error("Error removing document: ", error);
       });
   };
 }
