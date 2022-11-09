@@ -1,7 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ProfessorService from "../../services/PorfessorService";
 import { FirebaseContext } from "../../utils/FirebaseContext";
-const ListProfessorPage = () => {
+
+const CreateProfessorPage = () => {
   return (
     <FirebaseContext.Consumer>
       {(value) => <CreateProfessor firebase={value} />}
@@ -11,19 +13,24 @@ const ListProfessorPage = () => {
 
 const CreateProfessor = (props) => {
   const [name, setName] = useState("");
-  const [university, setUniversity] = useState("");
-  const [degree, setDegree] = useState("");
+  const [course, setCourse] = useState("");
+  const [salary, setSalary] = useState(0.0);
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     //criando obj professor
-    const professorNew = { name, university, degree };
+    const professorNew = { name, course, salary };
     //cadastro professor
-    ProfessorService.createProfessor(props.firebase.getFirestoreDb(), professorNew, () => {
-      alert("Professor cadastrado com sucesso!");
-      navigate("/listprofessor");
-    });
+    ProfessorService.addProfessor(
+      props.firebase.getFirestoreDb(),
+      professorNew,
+      () => {
+        alert("Professor cadastrado com sucesso!");
+        navigate("/listprofessor");
+      }
+    );
+  };
 
   return (
     <div style={{ marginTop: 20 }}>
@@ -41,24 +48,24 @@ const CreateProfessor = (props) => {
           />
         </div>
         <div className="form-group">
-          <label>University: </label>
+          <label>Course: </label>
           <input
             type="text"
             className="form-control"
             placeholder="Digite Universidade"
             onChange={(event) => {
-              setUniversity(event.target.value);
+              setCourse(event.target.value);
             }}
           />
         </div>
         <div className="form-group">
-          <label>Salário: </label>
+          <label>Salary: </label>
           <input
-            type="numeric"
+            type="number"
             className="form-control"
             placeholder="Digite Salário"
             onChange={(event) => {
-              setDegree(event.target.value);
+              setSalary(event.target.value);
             }}
           />
         </div>
@@ -74,4 +81,4 @@ const CreateProfessor = (props) => {
   );
 };
 
-export default ListProfessorPage;
+export default CreateProfessorPage;

@@ -16,8 +16,8 @@ class ProfessorService {
       const professorList = [];
       querySnapshot.forEach((doc) => {
         const idDoc = doc.id;
-        const { name, course, ira } = doc.data();
-        professorList.push({ idDoc, name, course, ira });
+        const { name, course, salary } = doc.data();
+        professorList.push({ idDoc, name, course, salary });
       });
       callback(professorList);
     });
@@ -29,8 +29,8 @@ class ProfessorService {
       const professorsList = [];
       querySnapshot.forEach((doc) => {
         const idDoc = doc.id;
-        const { name, course, ira } = doc.data();
-        professorsList.push({ idDoc, name, course, ira });
+        const { name, course, salary } = doc.data();
+        professorsList.push({ idDoc, name, course, salary });
       });
       callback(professorsList);
     });
@@ -52,8 +52,8 @@ class ProfessorService {
     const docRef = doc(firebaseDb, "professors", id);
     getDoc(docRef).then((doc) => {
       if (doc.exists()) {
-        const { name, course, ira } = doc.data();
-        callback({ id, name, course, ira });
+        const { name, course, salary } = doc.data();
+        callback({ id, name, course, salary });
       } else {
         console.log("No such document!");
       }
@@ -74,7 +74,7 @@ class ProfessorService {
 
   //DELETE PROFESSOR BY ID
   static deleteProfessorById = (firebaseDb, id, callback) => {
-    const docRef = doc(firebaseDb, "Professors", id);
+    const docRef = doc(firebaseDb, "professors", id);
     deleteDoc(docRef)
       .then(() => {
         callback();

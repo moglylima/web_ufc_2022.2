@@ -82,7 +82,7 @@ const EditStudent = (props) => {
           <label>IRA: </label>
           <input
             value={ira ?? ""}
-            type="numeric"
+            type="number"
             max={0}
             min={10}
             className="form-control"

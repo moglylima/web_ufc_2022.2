@@ -1,26 +1,59 @@
 import React from "react";
-import { useState } from "react";
 import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
+import ProfessorService from "../../services/PorfessorService";
+import { FirebaseContext } from "../../utils/FirebaseContext";
 
-const EditProfessor = () => {
-  const [name, setName] = useState("");
-  const [university, setUniversity] = useState("");
-  const [degree, setDegree] = useState("");
+const EditProfessorPage = () => {
+  return (
+    <FirebaseContext.Consumer>
+      {(value) => <EditProfessor firebase={value} />}
+    </FirebaseContext.Consumer>
+  );
+};
 
+const EditProfessor = (props) => {
   const navigate = useNavigate();
-  const paramUrl = useParams();
 
-  useEffect(() => {}, [paramUrl.idUrl]);
+  const [name, setName] = useState("");
+  const [course, setCourse] = useState("");
+  const [salary, setSalary] = useState(0.0);
+  const { idUrl } = useParams();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const professorUpdate = { name, university, degree };
-    //update professor
+    const studentUpdate = { name, course, salary };
+    ProfessorService.updateProfessorById(
+      props.firebase.getFirestoreDb(),
+      idUrl,
+      studentUpdate,
+      (doc) => {
+        const { name, course, salary } = doc;
+        alert(
+          `Student updated successfully! -> ${name} - ${course} - ${salary}`
+        );
+        navigate("/listprofessor");
+      }
+    );
   };
+
+  useEffect(() => {
+    ProfessorService.retrieveById(
+      props.firebase.getFirestoreDb(),
+      idUrl,
+      (student) => {
+        setName(student.name);
+        setCourse(student.course);
+        setSalary(student.salary);
+      }
+    );
+  }, [idUrl]);
+
   return (
-    <div style={{ marginTop: 20 }}>
-      <h1>Edit Professor...</h1>
+    <div>
+      <h1>Edit Professor</h1>
+
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Name: </label>
@@ -28,33 +61,33 @@ const EditProfessor = () => {
             value={name ?? ""}
             type="text"
             className="form-control"
-            placeholder="Digite seu nome"
+            placeholder="Digite nome"
             onChange={(event) => {
               setName(event.target.value);
             }}
           />
         </div>
         <div className="form-group">
-          <label>University: </label>
+          <label>Course: </label>
           <input
-            value={university ?? ""}
+            value={course ?? ""}
             type="text"
             className="form-control"
-            placeholder="Digite seu curso"
+            placeholder="Digite curso"
             onChange={(event) => {
-              setUniversity(event.target.value);
+              setCourse(event.target.value);
             }}
           />
         </div>
         <div className="form-group">
-          <label>Salário: </label>
+          <label>Salary: </label>
           <input
-            value={degree ?? ""}
-            type="text"
+            value={salary ?? 0.0}
+            type="number"
             className="form-control"
-            placeholder="Digite seu IRA"
+            placeholder="Digite Salary"
             onChange={(event) => {
-              setDegree(event.target.value);
+              setSalary(event.target.value);
             }}
           />
         </div>
@@ -70,4 +103,4 @@ const EditProfessor = () => {
   );
 };
 
-export default EditProfessor;
+export default EditProfessorPage;

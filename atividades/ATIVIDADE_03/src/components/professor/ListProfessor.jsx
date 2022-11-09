@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import ProfessorService from "../../services/PorfessorService";
@@ -42,7 +42,7 @@ const ListProfessor = (props) => {
         <tr key={index}>
           <td>{element.idDoc}</td>
           <td>{element.name}</td>
-          <td>{element.university}</td>
+          <td>{element.course}</td>
           <td>{element.salary}</td>
           <td>
             <Link
@@ -55,7 +55,7 @@ const ListProfessor = (props) => {
           </td>
           <td>
             <button
-              onClick={() => deleteProfessorById(element.idDoc)}
+              onClick={() => deleteProfessorById(idUrl)}
               style={{ margin: 5 }}
               type="button"
               className="btn btn-warning"
@@ -75,8 +75,8 @@ const ListProfessor = (props) => {
           <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>University</th>
-            <th>Degree</th>
+            <th>Course</th>
+            <th>Salary</th>
             <th colSpan={2} style={{ textAlign: "center" }}>
               Actions
             </th>
