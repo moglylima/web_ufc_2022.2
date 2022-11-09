@@ -25,14 +25,18 @@ const ListProfessor = (props) => {
   }, []);
 
   function deleteProfessorById(id) {
-    ProfessorService.deleteProfessorById(
-      props.firebase.getFirestoreDb(),
-      id,
-      () => {
-        alert(`Professor deleted successfully! -> ${id}`);
-        setProfessors(professors.filter((professor) => professor.idDoc !== id));
-      }
-    );
+    window.confirm("Are you sure you want to delete this professor?")
+      ? ProfessorService.deleteProfessorById(
+          props.firebase.getFirestoreDb(),
+          id,
+          () => {
+            alert(`Professor deleted successfully! -> ${id}`);
+            setProfessors(
+              professors.filter((professor) => professor.idDoc !== id)
+            );
+          }
+        )
+      : alert("Professor not deleted!");
   }
 
   const generateTableBody = () => {

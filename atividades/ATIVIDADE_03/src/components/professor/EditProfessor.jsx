@@ -24,18 +24,22 @@ const EditProfessor = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const studentUpdate = { name, course, salary };
-    ProfessorService.updateProfessorById(
-      props.firebase.getFirestoreDb(),
-      idUrl,
-      studentUpdate,
-      (doc) => {
-        const { name, course, salary } = doc;
-        alert(
-          `Student updated successfully! -> ${name} - ${course} - ${salary}`
-        );
-        navigate("/listprofessor");
-      }
-    );
+    window.confirm(
+      `Are you sure you want to update this professor?\nName = ${name}\nCourse = ${course}\nSalary = ${salary}`
+    )
+      ? ProfessorService.updateProfessorById(
+          props.firebase.getFirestoreDb(),
+          idUrl,
+          studentUpdate,
+          (doc) => {
+            const { name, course, salary } = doc;
+            alert(
+              `Student updated successfully! -> ${name} - ${course} - ${salary}`
+            );
+            navigate("/listprofessor");
+          }
+        )
+      : alert("Professor not updated!");
   };
 
   useEffect(() => {

@@ -22,14 +22,18 @@ const CreateStudent = (props) => {
     event.preventDefault();
     const studentNew = { name, course, ira };
 
-    StudentService.addStudent(
-      props.firebase.getFirestoreDb(),
-      studentNew,
-      (docRef) => {
-        alert("Student added with id: " + docRef);
-        navigate("/liststudent");
-      }
-    );
+    window.confirm(
+      `Are you sure you want to create this student?\nName = ${name}\nCourse = ${course}\nIRA = ${ira}`
+    )
+      ? StudentService.addStudent(
+          props.firebase.getFirestoreDb(),
+          studentNew,
+          (docRef) => {
+            alert("Student added with id: " + docRef);
+            navigate("/liststudent");
+          }
+        )
+      : alert("Student not created!");
   };
 
   return (

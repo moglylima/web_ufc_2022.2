@@ -22,14 +22,18 @@ const CreateProfessor = (props) => {
     //criando obj professor
     const professorNew = { name, course, salary };
     //cadastro professor
-    ProfessorService.addProfessor(
-      props.firebase.getFirestoreDb(),
-      professorNew,
-      () => {
-        alert("Professor cadastrado com sucesso!");
-        navigate("/listprofessor");
-      }
-    );
+    window.confirm(
+      `Are you sure you want to create this professor?\nName = ${name}\nCourse = ${course}\nSalary = ${salary}`
+    )
+      ? ProfessorService.addProfessor(
+          props.firebase.getFirestoreDb(),
+          professorNew,
+          () => {
+            alert("Professor cadastrado com sucesso!");
+            navigate("/listprofessor");
+          }
+        )
+      : alert("Professor not created!");
   };
 
   return (
@@ -61,7 +65,7 @@ const CreateProfessor = (props) => {
         <div className="form-group">
           <label>Salary: </label>
           <input
-            type="number"
+            type="numeric"
             className="form-control"
             placeholder="Digite Salário"
             onChange={(event) => {

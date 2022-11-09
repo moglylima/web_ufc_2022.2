@@ -25,16 +25,22 @@ const EditStudent = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const studentUpdate = { name, course, ira };
-    StudentService.updateStudentById(
-      props.firebase.getFirestoreDb(),
-      idUrl,
-      studentUpdate,
-      (doc) => {
-        const { name, course, ira } = doc;
-        alert(`Student updated successfully! -> ${name} - ${course} - ${ira}`);
-        navigate("/liststudent");
-      }
-    );
+    window.confirm(
+      `Are you sure you want to update this student?\nName = ${name}\nCourse = ${course}\nIRA = ${ira}`
+    )
+      ? StudentService.updateStudentById(
+          props.firebase.getFirestoreDb(),
+          idUrl,
+          studentUpdate,
+          (doc) => {
+            const { name, course, ira } = doc;
+            alert(
+              `Student updated successfully! -> ${name} - ${course} - ${ira}`
+            );
+            navigate("/liststudent");
+          }
+        )
+      : alert("Student not updated!");
   };
 
   useEffect(() => {
@@ -67,7 +73,7 @@ const EditStudent = (props) => {
           />
         </div>
         <div className="form-group">
-          <label>University: </label>
+          <label>Course: </label>
           <input
             value={course ?? ""}
             type="text"
@@ -82,7 +88,7 @@ const EditStudent = (props) => {
           <label>IRA: </label>
           <input
             value={ira ?? ""}
-            type="number"
+            type="numeric"
             max={0}
             min={10}
             className="form-control"

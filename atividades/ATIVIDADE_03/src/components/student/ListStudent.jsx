@@ -26,14 +26,16 @@ const ListStudent = (props) => {
   }, []);
 
   function deleteStudentById(id) {
-    StudentService.deleteStudentById(
-      props.firebase.getFirestoreDb(),
-      id,
-      () => {
-        alert(`Student deleted successfully! -> ${id}`);
-        setStudents(students.filter((student) => student.idDoc !== id));
-      }
-    );
+    window.confirm("Are you sure you want to delete this student?")
+      ? StudentService.deleteStudentById(
+          props.firebase.getFirestoreDb(),
+          id,
+          () => {
+            alert(`Student deleted successfully! -> ${id}`);
+            setStudents(students.filter((student) => student.idDoc !== id));
+          }
+        )
+      : alert("Student not deleted!");
   }
 
   const generateTableBody = () => {
